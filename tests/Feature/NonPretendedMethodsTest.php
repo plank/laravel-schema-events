@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
 use Plank\LaravelSchemaEvents\Factory\EventSchemaFactory;
 
 use function Pest\Laravel\artisan;
@@ -11,7 +10,7 @@ it('can get tables', function () {
     $connection = DB::connection();
 
     instance('db.schema', $schema = EventSchemaFactory::forConnection($connection));
-    
+
     $connection->pretend(function () use ($schema) {
         $tables = collect($schema->getTables())->pluck('name');
 
@@ -30,7 +29,7 @@ it('can get views', function () {
     $connection = DB::connection();
 
     instance('db.schema', $schema = EventSchemaFactory::forConnection($connection));
-    
+
     $connection->pretend(function () use ($schema) {
         $views = collect($schema->getViews())->pluck('name');
 
@@ -42,7 +41,7 @@ it('can get columns', function () {
     $connection = DB::connection();
 
     instance('db.schema', $schema = EventSchemaFactory::forConnection($connection));
-    
+
     $connection->pretend(function () use ($schema) {
         $columns = collect($schema->getColumns('users'))->pluck('name');
 
@@ -57,7 +56,7 @@ it('can get indexes', function () {
     $connection = DB::connection();
 
     instance('db.schema', $schema = EventSchemaFactory::forConnection($connection));
-    
+
     $connection->pretend(function () use ($schema) {
         $indexes = collect($schema->getIndexes('posts'))->pluck('name');
 
@@ -71,7 +70,7 @@ it('can get foreign keys', function () {
     $connection = DB::connection();
 
     instance('db.schema', $schema = EventSchemaFactory::forConnection($connection));
-    
+
     $connection->pretend(function () use ($schema) {
         $fks = collect($schema->getForeignKeys('posts'));
 
@@ -85,7 +84,7 @@ it('can get types', function () {
     $connection = DB::connection();
 
     instance('db.schema', $schema = EventSchemaFactory::forConnection($connection));
-    
+
     $connection->pretend(function () use ($schema) {
         expect(fn () => $schema->getTypes())->toThrow(LogicException::class);
     });

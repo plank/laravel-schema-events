@@ -12,12 +12,12 @@ return [
     | `ran`:
     | This listens to `MigrationStarted` events and bubbles up some more granular
     | events based on the changes taking place to the schema.
-    | 
-    | If the `finished` listener is not configured, these events will bubble up 
+    |
+    | If the `finished` listener is not configured, these events will bubble up
     | immediately.
     |
     | `finished`:
-    | This listens for the completion of migrations being run and batches the more 
+    | This listens for the completion of migrations being run and batches the more
     | granular events parsed during `ran` into one larger event to be processed.
     */
     'listeners' => [

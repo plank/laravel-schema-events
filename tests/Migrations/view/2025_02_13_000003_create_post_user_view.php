@@ -12,13 +12,13 @@ return new class extends Migration
      */
     public function up()
     {
-        DB::statement("
+        DB::statement('
             CREATE VIEW post_authors AS
             SELECT 
                 posts.title,
                 users.name as author_name
             FROM posts
             LEFT JOIN users ON posts.author_id = users.id
-        ");
+        ');
     }
 };

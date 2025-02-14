@@ -2,12 +2,12 @@
 
 namespace Plank\LaravelSchemaEvents;
 
-use Illuminate\Database\Events\MigrationStarted;
 use Illuminate\Database\Events\MigrationsEnded;
+use Illuminate\Database\Events\MigrationStarted;
 use Illuminate\Support\Facades\Event;
+use Plank\LaravelSchemaEvents\Repository\EventRepository;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Plank\LaravelSchemaEvents\Repository\EventRepository;
 
 class LaravelSchemaEventsServiceProvider extends PackageServiceProvider
 {

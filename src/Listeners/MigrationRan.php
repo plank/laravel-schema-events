@@ -3,14 +3,11 @@
 namespace Plank\LaravelSchemaEvents\Listeners;
 
 use Closure;
-use Illuminate\Console\Command;
 use Illuminate\Container\Container;
 use Illuminate\Database\Connection;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Database\Events\MigrationStarted;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Artisan;
-use Kfriars\ConnectionShim\Connection\ConnectionShim;
 use Kfriars\ConnectionShim\Contracts\ConfigurableSchema;
 use Plank\LaravelSchemaEvents\Facades\SchemaEvents;
 use Plank\LaravelSchemaEvents\Factory\EventSchemaFactory;

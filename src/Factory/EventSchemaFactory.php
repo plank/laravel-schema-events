@@ -34,7 +34,7 @@ class EventSchemaFactory
         if ($connection instanceof MariaDbConnection) {
             return new MariaDbEventBuilder($connection);
         }
-        
+
         if ($connection instanceof SqlServerConnection) {
             return new SqlServerEventBuilder($connection);
         }

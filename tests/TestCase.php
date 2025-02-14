@@ -2,7 +2,6 @@
 
 namespace Plank\LaravelSchemaEvents\Tests;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use Kfriars\ConnectionShim\ConnectionShimServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Plank\LaravelSchemaEvents\LaravelSchemaEventsServiceProvider;

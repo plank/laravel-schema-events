@@ -34,10 +34,10 @@ it('emits table created events when the migrations create tables', function () {
     expect($event->columns)->toContain('type');
     expect($event->columns)->toContain('created_at');
     expect($event->columns)->toContain('updated_at');
-    
+
     // Indexes
     expect($event->indexes)->toContain('type');
-    
+
     // FKs
     expect($event->foreignKeys)->toContain('comments_post_id_foreign');
     expect($event->foreignKeys)->toContain('comments_user_id_foreign');

@@ -20,7 +20,7 @@ trait ListensToSchemaEvents
 
     public function __construct(Connection $connection)
     {
-        $this->events = new Collection();
+        $this->events = new Collection;
 
         parent::__construct($connection);
     }

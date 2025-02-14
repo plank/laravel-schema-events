@@ -10,14 +10,14 @@ class EventRepository
 
     public function __construct()
     {
-        $this->events = new Collection();
+        $this->events = new Collection;
     }
 
     public function get()
     {
         $events = $this->events;
 
-        $this->events = new Collection();
+        $this->events = new Collection;
 
         return $events;
     }

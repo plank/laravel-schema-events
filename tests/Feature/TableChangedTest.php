@@ -40,7 +40,7 @@ it('emits table created events when the migrations create tables', function () {
         'from' => 'description',
         'to' => 'blurb',
     ]);
-    
+
     // Indexes
     expect($event->addedIndexes)->toContain('posts_slug_unique');
     expect($event->addedIndexes)->toContain('posts_published_at_index');

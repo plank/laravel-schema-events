@@ -6,7 +6,6 @@ use Illuminate\Database\Connection;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Collection;
 use Plank\LaravelSchemaEvents\Concerns\ParsesBlueprint;
-use Plank\LaravelSchemaEvents\Contracts\SchemaEvent;
 
 /**
  * @property Collection<string> $columns
@@ -34,9 +33,9 @@ final readonly class TableCreated
             databaseName: $connection->getDatabaseName(),
             driverName: $connection->getDriverName(),
             table: $blueprint->getTable(),
-            columns: static::parseAddedColumns($blueprint),
-            indexes: static::parseAddedIndexes($blueprint),
-            foreignKeys: static::parseAddedForeignKeys($blueprint),
+            columns: self::parseAddedColumns($blueprint),
+            indexes: self::parseAddedIndexes($blueprint),
+            foreignKeys: self::parseAddedForeignKeys($blueprint),
         );
     }
 }
