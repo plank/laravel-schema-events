@@ -25,11 +25,13 @@ return [
         'finished' => MigrationsFinished::class,
     ],
 
-    /**
-     * Determine if we should be listening to pretended migrations
-     */
-    'listen_to_pretend' => false,
-
+    /*
+    |--------------------------------------------------------------------------
+    | Commands
+    |--------------------------------------------------------------------------
+    |
+    | These are the blueprint commands we use to parse out the changes that occurred
+    */
     'commands' => [
         'renamed_columns' => ['renameColumn'],
         'dropped_columns' => ['dropColumn'],

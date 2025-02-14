@@ -1,19 +1,30 @@
-# A Laravel package to emit events based on the schema changes taking place during migration.
+<p align="center"><a href="https://plank.co"><img src="art/schema-events.png" width="100%"></a></p>
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/plank/laravel-schema-events.svg?style=flat-square)](https://packagist.org/packages/plank/laravel-schema-events)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/plank/laravel-schema-events/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/plank/laravel-schema-events/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/plank/laravel-schema-events/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/plank/laravel-schema-events/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/plank/laravel-schema-events.svg?style=flat-square)](https://packagist.org/packages/plank/laravel-schema-events)
+<p align="center">
+<a href="https://packagist.org/packages/plank/schema-events"><img src="https://img.shields.io/packagist/php-v/plank/schema-events?color=%23fae370&label=php&logo=php&logoColor=%23fff" alt="PHP Version Support"></a>
+<a href="https://laravel.com/docs/11.x/releases#support-policy"><img src="https://img.shields.io/badge/laravel-10.x,%2011.x-%2343d399?color=%23f1ede9&logo=laravel&logoColor=%23ffffff" alt="PHP Version Support"></a>
+<a href="https://github.com/plank/schema-events/actions?query=workflow%3Arun-tests"><img src="https://img.shields.io/github/actions/workflow/status/plank/schema-events/run-tests.yml?branch=main&&color=%23bfc9bd&label=run-tests&logo=github&logoColor=%23fff" alt="GitHub Workflow Status"></a>
+<a href="https://codeclimate.com/github/plank/schema-events/test_coverage"><img src="https://img.shields.io/codeclimate/coverage/plank/schema-events?color=%23ff9376&label=test%20coverage&logo=code-climate&logoColor=%23fff" /></a>
+<a href="https://codeclimate.com/github/plank/schema-events/maintainability"><img src="https://img.shields.io/codeclimate/maintainability/plank/schema-events?color=%23528cff&label=maintainablility&logo=code-climate&logoColor=%23fff" /></a>
+</p>
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+# Laravel Schema Events
 
-## Support us
+Track and respond to database schema changes in your Laravel application through a simple event system.
 
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/laravel-schema-events.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/laravel-schema-events)
+## Table of Contents
 
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+- [Configuration](#configuration)
+- [Usage](#usage)
+  - [Available Events](#available-events)
+  - [Event Properties](#event-properties)
+- [Contributing](#contributing)
+- [Credits](#credits)
+- [License](#license)
+- [Security Vulnerabilities](#security-vulnerabilities)
+- [About Plank](#about-plank)
 
 ## Installation
 
@@ -23,62 +34,142 @@ You can install the package via composer:
 composer require plank/laravel-schema-events
 ```
 
-You can publish and run the migrations with:
-
-```bash
-php artisan vendor:publish --tag="laravel-schema-events-migrations"
-php artisan migrate
-```
-
 You can publish the config file with:
 
 ```bash
-php artisan vendor:publish --tag="laravel-schema-events-config"
+php artisan vendor:publish --tag="schema-events-config"
 ```
 
-This is the contents of the published config file:
+## Quick Start
+
+1. Install the package
+2. Set up an event listener:
 
 ```php
-return [
+<?php
+
+namespace App\Listeners;
+
+use Plank\LaravelSchemaEvents\Events\TableCreated;
+
+class LogTableCreation
+{
+    public function handle(TableCreated $event)
+    {
+        \Log::info("Table {$event->table} was created with columns: " . implode(', ', $event->columns->toArray()));
+    }
+}
+```
+
+3. Register your listener in `EventServiceProvider.php`:
+
+```php
+protected $listen = [
+    TableCreated::class => [
+        LogTableCreation::class,
+    ],
 ];
 ```
 
-Optionally, you can publish the views using
+## Configuration
 
-```bash
-php artisan vendor:publish --tag="laravel-schema-events-views"
+The configuration file allows you to customize:
+
+- Which migration events to listen for
+- Which commands are tracked for different schema operations
+
+```php
+return [
+    'listeners' => [
+        'ran' => MigrationRan::class,
+        'finished' => MigrationsFinished::class,
+    ],
+    
+    'commands' => [
+        'renamed_columns' => ['renameColumn'],
+        'dropped_columns' => ['dropColumn'],
+        'added_indexes' => [
+            'primary',
+            'unique',
+            'index',
+            'fulltext',
+            'spatialIndex',
+        ],
+        // ... additional commands
+    ],
+];
 ```
 
 ## Usage
 
+### Available Events
+
+The package provides four main events:
+
+1. `TableCreated` - Emitted when a new table is created
+2. `TableChanged` - Emitted when an existing table is modified
+3. `TableDropped` - Emitted when a table is dropped
+4. `TableRenamed` - Emitted when a table is renamed
+
+### Event Properties
+
+Each event includes basic connection information:
+- `connection` - The name of the database connection
+- `databaseName` - The name of the database
+- `driverName` - The database driver being used
+
+#### TableCreated Event
 ```php
-$laravelSchemaEvents = new Plank\LaravelSchemaEvents();
-echo $laravelSchemaEvents->echoPhrase('Hello, Plank!');
+public readonly string $table;
+public readonly Collection $columns;      // Added columns
+public readonly Collection $indexes;      // Added indexes
+public readonly Collection $foreignKeys;  // Added foreign keys
 ```
 
-## Testing
-
-```bash
-composer test
+#### TableChanged Event
+```php
+public readonly string $table;
+public readonly Collection $addedColumns;
+public readonly Collection $droppedColumns;
+public readonly Collection $renamedColumns;     // Contains [from => x, to => y]
+public readonly Collection $modifiedColumns;
+public readonly Collection $addedIndexes;
+public readonly Collection $droppedIndexes;
+public readonly Collection $renamedIndexes;     // Contains [from => x, to => y]
+public readonly Collection $addedForeignKeys;
+public readonly Collection $droppedForeignKeys;
 ```
 
-## Changelog
+#### TableDropped Event
+```php
+public readonly string $table;
+```
 
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+#### TableRenamed Event
+```php
+public readonly string $from;
+public readonly string $to;
+```
 
 ## Contributing
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
-## Security Vulnerabilities
-
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
-
 ## Credits
 
-- [Kurt Friars](https://github.com/plank)
+- [Kurt Friars](https://github.com/kfriars)
 - [All Contributors](../../contributors)
 
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+
+## Security Vulnerabilities
+
+Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
+
+## About Plank
+
+[Plank](https://plankdesign.com) is a web development agency based in Montreal, QC, Canada. We specialize in developing custom content management systems and web applications.
+
+Learn more about us on [our website](https://plankdesign.com).

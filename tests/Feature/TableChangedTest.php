@@ -5,7 +5,7 @@ use Plank\LaravelSchemaEvents\Events\TableChanged;
 
 use function Pest\Laravel\artisan;
 
-it('emits table created events when the migrations create tables', function () {
+it('emits table changed events when the migrations change tables', function () {
     Event::fake([TableChanged::class]);
 
     artisan('migrate', [
