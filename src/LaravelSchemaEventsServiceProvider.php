@@ -2,9 +2,12 @@
 
 namespace Plank\LaravelSchemaEvents;
 
+use Illuminate\Database\Events\MigrationStarted;
+use Illuminate\Database\Events\MigrationsEnded;
+use Illuminate\Support\Facades\Event;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Plank\LaravelSchemaEvents\Commands\LaravelSchemaEventsCommand;
+use Plank\LaravelSchemaEvents\Repository\EventRepository;
 
 class LaravelSchemaEventsServiceProvider extends PackageServiceProvider
 {
@@ -17,9 +20,18 @@ class LaravelSchemaEventsServiceProvider extends PackageServiceProvider
          */
         $package
             ->name('laravel-schema-events')
-            ->hasConfigFile()
-            ->hasViews()
-            ->hasMigration('create_laravel_schema_events_table')
-            ->hasCommand(LaravelSchemaEventsCommand::class);
+            ->hasConfigFile();
+    }
+
+    public function bootingPackage()
+    {
+        $this->app->scopedIf(EventRepository::class, function () {
+            return new EventRepository;
+        });
+
+        Event::listen(MigrationStarted::class, config()->get('schema-events.listeners.ran'));
+        Event::listen(MigrationsEnded::class, config()->get('schema-events.listeners.finished'));
+
+        return $this;
     }
 }
