@@ -45,7 +45,7 @@
         "prepare": "@php vendor/bin/testbench package:discover --ansi",
         "analyse": "vendor/bin/phpstan analyse",
         "test": "vendor/bin/pest",
-        "test-coverage": "vendor/bin/pest --coverage-clover",
+        "test-coverage": "vendor/bin/pest --coverage-clover ./build/logs/clover.xml",
         "format": "vendor/bin/pint"
     },
     "config": {
