@@ -37,27 +37,18 @@ trait ListensToSchemaEvents
     {
         $blueprint = $this->createBlueprint($table, $callback);
 
-        /** @var class-string<TableCreated> $event */
-        $event = config()->get('schema-events.events.created');
-
-        $this->events->push($event::from($this->connection, $blueprint));
+        $this->events->push(TableCreated::from($this->connection, $blueprint));
     }
 
     public function drop($table)
     {
-        /** @var class-string<TableDropped> $event */
-        $event = config()->get('schema-events.events.dropped');
-
-        $this->events->push($event::from($this->connection, $table));
+        $this->events->push(TableDropped::from($this->connection, $table));
     }
 
     public function dropIfExists($table)
     {
         if ($this->hasTable($table)) {
-            /** @var class-string<TableDropped> $event */
-            $event = config()->get('schema-events.events.dropped');
-
-            $this->events->push($event::from($this->connection, $table));
+            $this->events->push(TableDropped::from($this->connection, $table));
         }
     }
 
@@ -65,18 +56,12 @@ trait ListensToSchemaEvents
     {
         $blueprint = $this->createBlueprint($table, $callback);
 
-        /** @var class-string<TableChanged> $event */
-        $event = config()->get('schema-events.events.changed');
-
-        $this->events->push($event::from($this->connection, $blueprint));
+        $this->events->push(TableChanged::from($this->connection, $blueprint));
     }
 
     public function rename($from, $to)
     {
-        /** @var class-string<TableCreated> $event */
-        $event = config()->get('schema-events.events.renamed');
-
-        $this->events->push($event::from($this->connection, $from, $to));
+        $this->events->push(TableRenamed::from($this->connection, $from, $to));
     }
 
     public function hasTable($table)
