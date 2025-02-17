@@ -17,9 +17,9 @@ final readonly class TableCreated
     use ParsesBlueprint;
 
     public function __construct(
-        public string $connection,
-        public string $databaseName,
-        public string $driverName,
+        public ?string $connection,
+        public ?string $databaseName,
+        public ?string $driverName,
         public string $table,
         public Collection $columns,
         public Collection $indexes,
@@ -28,7 +28,7 @@ final readonly class TableCreated
 
     public static function from(Connection $connection, Blueprint $blueprint): self
     {
-        return new self(
+        $self = new self(
             connection: $connection->getName(),
             databaseName: $connection->getDatabaseName(),
             driverName: $connection->getDriverName(),
@@ -37,5 +37,9 @@ final readonly class TableCreated
             indexes: self::parseAddedIndexes($blueprint),
             foreignKeys: self::parseAddedForeignKeys($blueprint),
         );
+
+        dump($self);
+
+        return $self;
     }
 }
