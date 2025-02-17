@@ -18,7 +18,7 @@ use Plank\LaravelSchemaEvents\Concerns\ParsesBlueprint;
  * @property Collection<string> $addedForeignKeys
  * @property Collection<string> $droppedForeignKeys
  */
-final readonly class TableChanged
+readonly class TableChanged
 {
     use ParsesBlueprint;
 

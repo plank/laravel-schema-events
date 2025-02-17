@@ -4,7 +4,7 @@ namespace Plank\LaravelSchemaEvents\Events;
 
 use Illuminate\Database\Connection;
 
-final readonly class TableRenamed
+readonly class TableRenamed
 {
     public function __construct(
         public string $connection,
