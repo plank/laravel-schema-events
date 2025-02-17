@@ -1,9 +1,5 @@
 <?php
 
-use Plank\LaravelSchemaEvents\Events\TableChanged;
-use Plank\LaravelSchemaEvents\Events\TableCreated;
-use Plank\LaravelSchemaEvents\Events\TableDropped;
-use Plank\LaravelSchemaEvents\Events\TableRenamed;
 use Plank\LaravelSchemaEvents\Listeners\MigrationRan;
 use Plank\LaravelSchemaEvents\Listeners\MigrationsFinished;
 
