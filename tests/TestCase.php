@@ -21,7 +21,7 @@ class TestCase extends Orchestra
     protected function getPackageProviders($app)
     {
         return [
-            ConnectionShimServiceProvider::class,
+            // ConnectionShimServiceProvider::class,
             LaravelSchemaEventsServiceProvider::class,
         ];
     }
