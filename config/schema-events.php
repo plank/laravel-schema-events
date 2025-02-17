@@ -1,5 +1,9 @@
 <?php
 
+use Plank\LaravelSchemaEvents\Events\TableChanged;
+use Plank\LaravelSchemaEvents\Events\TableCreated;
+use Plank\LaravelSchemaEvents\Events\TableDropped;
+use Plank\LaravelSchemaEvents\Events\TableRenamed;
 use Plank\LaravelSchemaEvents\Listeners\MigrationRan;
 use Plank\LaravelSchemaEvents\Listeners\MigrationsFinished;
 
@@ -23,6 +27,31 @@ return [
     'listeners' => [
         'ran' => MigrationRan::class,
         'finished' => MigrationsFinished::class,
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Listeners
+    |--------------------------------------------------------------------------
+    |
+    | `created`:
+    | The event emitted when tables are created during migrations.
+    |
+    | `changed`:
+    | The event emitted when tables are altered during migrations.
+    |
+    | `renamed`:
+    | The event emitted when tables are renamed during migrations.
+    |
+    | `dropped`:
+    | The event emitted when tables are dropped during migrations.
+    |
+    */
+    'events' => [
+        'created' => TableCreated::class,
+        'changed' => TableChanged::class,
+        'renamed' => TableRenamed::class,
+        'dropped' => TableDropped::class,
     ],
 
     /*
