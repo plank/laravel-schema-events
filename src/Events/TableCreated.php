@@ -12,7 +12,7 @@ use Plank\LaravelSchemaEvents\Concerns\ParsesBlueprint;
  * @property Collection<string> $indexes
  * @property Collection<string> $foreignKeys
  */
-readonly class TableCreated
+final readonly class TableCreated
 {
     use ParsesBlueprint;
 

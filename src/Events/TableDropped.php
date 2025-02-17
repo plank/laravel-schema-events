@@ -4,7 +4,7 @@ namespace Plank\LaravelSchemaEvents\Events;
 
 use Illuminate\Database\Connection;
 
-readonly class TableDropped
+final readonly class TableDropped
 {
     public function __construct(
         public string $connection,

@@ -31,31 +31,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Listeners
-    |--------------------------------------------------------------------------
-    |
-    | `created`:
-    | The event emitted when tables are created during migrations.
-    |
-    | `changed`:
-    | The event emitted when tables are altered during migrations.
-    |
-    | `renamed`:
-    | The event emitted when tables are renamed during migrations.
-    |
-    | `dropped`:
-    | The event emitted when tables are dropped during migrations.
-    |
-    */
-    'events' => [
-        'created' => TableCreated::class,
-        'changed' => TableChanged::class,
-        'renamed' => TableRenamed::class,
-        'dropped' => TableDropped::class,
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
     | Commands
     |--------------------------------------------------------------------------
     |
