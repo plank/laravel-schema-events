@@ -5,7 +5,7 @@ use Plank\LaravelSchemaEvents\Events\TableRenamed;
 
 use function Pest\Laravel\artisan;
 
-it('emits table dropped events when the migrations drop tables', function () {
+it('emits table renamed events when the migrations rename tables', function () {
     Event::fake([TableRenamed::class]);
 
     artisan('migrate', [
@@ -13,10 +13,11 @@ it('emits table dropped events when the migrations drop tables', function () {
         '--realpath' => true,
     ])->run();
 
-    $events = Event::dispatchedEvents();
+    $events = Event::dispatched(TableRenamed::class, fn () => true);
+    
+    expect($events)->toHaveCount(1);
 
-    expect($events[TableRenamed::class])->toHaveCount(1);
-    expect($event = $events[TableRenamed::class][0][0])->toBeInstanceOf(TableRenamed::class);
+    expect($event = $events[0][0])->toBeInstanceOf(TableRenamed::class);
 
     // Connection Info
     expect($event->connection)->toBe('testing');

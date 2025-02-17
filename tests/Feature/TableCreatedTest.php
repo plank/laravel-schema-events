@@ -13,10 +13,11 @@ it('emits table created events when the migrations create tables', function () {
         '--realpath' => true,
     ])->run();
 
-    $events = Event::dispatchedEvents();
+    $events = Event::dispatched(TableCreated::class, fn () => true);
+    
+    expect($events)->toHaveCount(1);
 
-    expect($events[TableCreated::class])->toHaveCount(1);
-    expect($event = $events[TableCreated::class][0][0])->toBeInstanceOf(TableCreated::class);
+    expect($event = $events[0][0])->toBeInstanceOf(TableCreated::class);
 
     // Connection Info
     expect($event->connection)->toBe('testing');

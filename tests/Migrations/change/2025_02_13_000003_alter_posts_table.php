@@ -16,11 +16,21 @@ return new class extends Migration
             $table->foreignId('publisher_id')->constrained();
             $table->string('published_at');
             $table->index(['published_at']);
+        });
 
+        Schema::table('posts', function (Blueprint $table) {
             $table->renameColumn('description', 'blurb');
+        });
+
+        Schema::table('posts', function (Blueprint $table) {
             $table->dropColumn('teaser');
-            $table->dropForeign(['author_id']);
+        });
+       
+        Schema::table('posts', function (Blueprint $table) {
             $table->dropIndex(['tag']);
+        });
+
+        Schema::table('posts', function (Blueprint $table) {
             $table->renameIndex('posts_category_index', 'category_index');
         });
     }

@@ -14,5 +14,5 @@ it('does not emit events during pretend migrations', function () {
         '--realpath' => true,
     ])->run();
 
-    expect(Event::dispatchedEvents())->toBeEmpty();
+    expect(Event::dispatched(TableDropped::class, fn () => true))->toBeEmpty();
 });

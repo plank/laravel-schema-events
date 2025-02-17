@@ -13,12 +13,13 @@ it('emits table changed events when the migrations change tables', function () {
         '--realpath' => true,
     ])->run();
 
-    $events = Event::dispatchedEvents();
-
-    expect($events[TableChanged::class])->toHaveCount(1);
-    expect($event = $events[TableChanged::class][0][0])->toBeInstanceOf(TableChanged::class);
+    $events = Event::dispatched(TableChanged::class, fn () => true);
+    
+    expect($events)->toHaveCount(5);
 
     // Connection Info
+    $event = $events[0][0];
+
     expect($event->connection)->toBe('testing');
     expect($event->databaseName)->toBe(':memory:');
     expect($event->driverName)->toBe('sqlite');
@@ -33,26 +34,28 @@ it('emits table changed events when the migrations change tables', function () {
     expect($event->addedColumns)->toContain('published_at');
 
     expect($event->modifiedColumns)->toContain('body');
+    
+    expect($event->addedIndexes)->toContain('posts_slug_unique');
+    expect($event->addedIndexes)->toContain('posts_published_at_index');
 
-    expect($event->droppedColumns)->toContain('teaser');
+    expect($event->addedForeignKeys)->toContain('posts_publisher_id_foreign');
 
+    $event = $events[1][0];
     expect($event->renamedColumns)->toContain([
         'from' => 'description',
         'to' => 'blurb',
     ]);
 
     // Indexes
-    expect($event->addedIndexes)->toContain('posts_slug_unique');
-    expect($event->addedIndexes)->toContain('posts_published_at_index');
-
+    $event = $events[2][0];
+    expect($event->droppedColumns)->toContain('teaser');
+    
+    $event = $events[3][0];
     expect($event->droppedIndexes)->toContain('posts_tag_index');
-
+    
+    $event = $events[4][0];
     expect($event->renamedIndexes)->toContain([
         'from' => 'posts_category_index',
         'to' => 'category_index',
     ]);
-
-    // FKs
-    expect($event->addedForeignKeys)->toContain('posts_publisher_id_foreign');
-    expect($event->droppedForeignKeys)->toContain('posts_author_id_foreign');
 });

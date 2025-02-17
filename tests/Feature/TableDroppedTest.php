@@ -13,10 +13,11 @@ it('emits table dropped events when the migrations drop tables', function () {
         '--realpath' => true,
     ])->run();
 
-    $events = Event::dispatchedEvents();
+    $events = Event::dispatched(TableDropped::class, fn () => true);
+    
+    expect($events)->toHaveCount(1);
 
-    expect($events[TableDropped::class])->toHaveCount(1);
-    expect($event = $events[TableDropped::class][0][0])->toBeInstanceOf(TableDropped::class);
+    expect($event = $events[0][0])->toBeInstanceOf(TableDropped::class);
 
     // Connection Info
     expect($event->connection)->toBe('testing');
@@ -35,10 +36,11 @@ it('emits table dropped events when the migrations "drop if exists" tables', fun
         '--realpath' => true,
     ])->run();
 
-    $events = Event::dispatchedEvents();
+    $events = Event::dispatched(TableDropped::class, fn () => true);
+    
+    expect($events)->toHaveCount(1);
 
-    expect($events[TableDropped::class])->toHaveCount(1);
-    expect($event = $events[TableDropped::class][0][0])->toBeInstanceOf(TableDropped::class);
+    expect($event = $events[0][0])->toBeInstanceOf(TableDropped::class);
 
     // Connection Info
     expect($event->connection)->toBe('testing');
