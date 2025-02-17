@@ -8,7 +8,6 @@ use Illuminate\Database\Connection;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Database\Events\MigrationStarted;
 use Illuminate\Support\Collection;
-use Kfriars\ConnectionShim\Contracts\ConfigurableSchema;
 use Plank\LaravelSchemaEvents\Facades\SchemaEvents;
 use Plank\LaravelSchemaEvents\Factory\EventSchemaFactory;
 
@@ -34,12 +33,13 @@ class MigrationRan
     {
         $activeInServiceContainer = $this->container->make('db.schema');
         $activeOnConnection = $connection->getSchemaBuilder();
+        $hasConfigurableSchema = is_a($connection, 'Kfriars\ConnectionShim\Contracts\ConfigurableSchema', true);
 
         try {
             $schema = EventSchemaFactory::forConnection($connection);
             $this->container->instance('db.schema', $schema);
 
-            if ($connection instanceof ConfigurableSchema) {
+            if ($hasConfigurableSchema) {
                 $connection->setSchemaBuilder($schema);
             }
 
@@ -47,7 +47,7 @@ class MigrationRan
         } finally {
             $this->container->instance('db.schema', $activeInServiceContainer);
 
-            if ($connection instanceof ConfigurableSchema) {
+            if ($hasConfigurableSchema) {
                 $connection->setSchemaBuilder($activeOnConnection);
             }
         }

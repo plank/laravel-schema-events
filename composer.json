@@ -18,7 +18,6 @@
     "require": {
         "php": "^8.2",
         "illuminate/contracts": "^11.0",
-        "kfriars/connection-shim": "*",
         "spatie/laravel-package-tools": "^1.16"
     },
     "require-dev": {

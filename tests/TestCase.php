@@ -2,7 +2,6 @@
 
 namespace Plank\LaravelSchemaEvents\Tests;
 
-use Kfriars\ConnectionShim\ConnectionShimServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Plank\LaravelSchemaEvents\LaravelSchemaEventsServiceProvider;
 
@@ -21,7 +20,6 @@ class TestCase extends Orchestra
     protected function getPackageProviders($app)
     {
         return [
-            // ConnectionShimServiceProvider::class,
             LaravelSchemaEventsServiceProvider::class,
         ];
     }

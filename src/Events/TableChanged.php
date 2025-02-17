@@ -23,9 +23,9 @@ final readonly class TableChanged
     use ParsesBlueprint;
 
     public function __construct(
-        public ?string $connection,
-        public ?string $databaseName,
-        public ?string $driverName,
+        public string $connection,
+        public string $databaseName,
+        public string $driverName,
         public string $table,
         public Collection $addedColumns,
         public Collection $droppedColumns,
@@ -40,7 +40,7 @@ final readonly class TableChanged
 
     public static function from(Connection $connection, Blueprint $blueprint): self
     {
-        $self = new self(
+        return new self(
             connection: $connection->getName(),
             databaseName: $connection->getDatabaseName(),
             driverName: $connection->getDriverName(),
@@ -55,9 +55,5 @@ final readonly class TableChanged
             addedForeignKeys: self::parseAddedForeignKeys($blueprint),
             droppedForeignKeys: self::parseDroppedForeignKeys($blueprint),
         );
-
-        dump($self);
-
-        return $self;
     }
 }
