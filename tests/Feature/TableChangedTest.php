@@ -14,7 +14,7 @@ it('emits table changed events when the migrations change tables', function () {
     ])->run();
 
     $events = Event::dispatched(TableChanged::class, fn () => true);
-    
+
     expect($events)->toHaveCount(5);
 
     // Connection Info
@@ -34,7 +34,7 @@ it('emits table changed events when the migrations change tables', function () {
     expect($event->addedColumns)->toContain('published_at');
 
     expect($event->modifiedColumns)->toContain('body');
-    
+
     expect($event->addedIndexes)->toContain('posts_slug_unique');
     expect($event->addedIndexes)->toContain('posts_published_at_index');
 
@@ -49,10 +49,10 @@ it('emits table changed events when the migrations change tables', function () {
     // Indexes
     $event = $events[2][0];
     expect($event->droppedColumns)->toContain('teaser');
-    
+
     $event = $events[3][0];
     expect($event->droppedIndexes)->toContain('posts_tag_index');
-    
+
     $event = $events[4][0];
     expect($event->renamedIndexes)->toContain([
         'from' => 'posts_category_index',

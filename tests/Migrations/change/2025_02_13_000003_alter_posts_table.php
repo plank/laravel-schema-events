@@ -25,7 +25,7 @@ return new class extends Migration
         Schema::table('posts', function (Blueprint $table) {
             $table->dropColumn('teaser');
         });
-       
+
         Schema::table('posts', function (Blueprint $table) {
             $table->dropIndex(['tag']);
         });

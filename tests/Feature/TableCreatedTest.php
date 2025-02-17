@@ -14,7 +14,7 @@ it('emits table created events when the migrations create tables', function () {
     ])->run();
 
     $events = Event::dispatched(TableCreated::class, fn () => true);
-    
+
     expect($events)->toHaveCount(1);
 
     expect($event = $events[0][0])->toBeInstanceOf(TableCreated::class);

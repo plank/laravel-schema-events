@@ -14,7 +14,7 @@ it('emits table dropped events when the migrations drop tables', function () {
     ])->run();
 
     $events = Event::dispatched(TableDropped::class, fn () => true);
-    
+
     expect($events)->toHaveCount(1);
 
     expect($event = $events[0][0])->toBeInstanceOf(TableDropped::class);
@@ -37,7 +37,7 @@ it('emits table dropped events when the migrations "drop if exists" tables', fun
     ])->run();
 
     $events = Event::dispatched(TableDropped::class, fn () => true);
-    
+
     expect($events)->toHaveCount(1);
 
     expect($event = $events[0][0])->toBeInstanceOf(TableDropped::class);

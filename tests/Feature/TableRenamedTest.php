@@ -14,7 +14,7 @@ it('emits table renamed events when the migrations rename tables', function () {
     ])->run();
 
     $events = Event::dispatched(TableRenamed::class, fn () => true);
-    
+
     expect($events)->toHaveCount(1);
 
     expect($event = $events[0][0])->toBeInstanceOf(TableRenamed::class);
