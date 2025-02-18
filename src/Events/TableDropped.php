@@ -19,7 +19,7 @@ final readonly class TableDropped
             connection: $connection->getName(),
             databaseName: $connection->getDatabaseName(),
             driverName: $connection->getDriverName(),
-            table: $table,
+            table: $connection->getTablePrefix().$table,
         );
     }
 }
