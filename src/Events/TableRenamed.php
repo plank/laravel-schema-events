@@ -20,8 +20,8 @@ final readonly class TableRenamed
             connection: $connection->getName(),
             databaseName: $connection->getDatabaseName(),
             driverName: $connection->getDriverName(),
-            from: $from,
-            to: $to,
+            from: $connection->getTablePrefix().$from,
+            to: $connection->getTablePrefix().$to,
         );
     }
 }

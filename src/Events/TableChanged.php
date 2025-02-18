@@ -44,7 +44,7 @@ final readonly class TableChanged
             connection: $connection->getName(),
             databaseName: $connection->getDatabaseName(),
             driverName: $connection->getDriverName(),
-            table: $blueprint->getTable(),
+            table: $connection->getTablePrefix().$blueprint->getTable(),
             addedColumns: self::parseAddedColumns($blueprint),
             droppedColumns: self::parseDroppedColumns($blueprint),
             renamedColumns: self::parseRenamedColumns($blueprint),

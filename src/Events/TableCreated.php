@@ -32,7 +32,7 @@ final readonly class TableCreated
             connection: $connection->getName(),
             databaseName: $connection->getDatabaseName(),
             driverName: $connection->getDriverName(),
-            table: $blueprint->getTable(),
+            table: $connection->getTablePrefix().$blueprint->getTable(),
             columns: self::parseAddedColumns($blueprint),
             indexes: self::parseAddedIndexes($blueprint),
             foreignKeys: self::parseAddedForeignKeys($blueprint),
