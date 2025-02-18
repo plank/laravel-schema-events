@@ -4,7 +4,6 @@ namespace Plank\LaravelSchemaEvents\Concerns;
 
 use Closure;
 use Illuminate\Database\Connection;
-use Illuminate\Database\Schema\Builder;
 use Illuminate\Support\Collection;
 use Plank\LaravelSchemaEvents\Events\TableChanged;
 use Plank\LaravelSchemaEvents\Events\TableCreated;
@@ -12,7 +11,7 @@ use Plank\LaravelSchemaEvents\Events\TableDropped;
 use Plank\LaravelSchemaEvents\Events\TableRenamed;
 
 /**
- * @mixin Builder
+ * @mixin \Illuminate\Database\Schema\Builder
  */
 trait ListensToSchemaEvents
 {
