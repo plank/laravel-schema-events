@@ -30,7 +30,12 @@ class LaravelSchemaEventsServiceProvider extends PackageServiceProvider
         });
 
         Event::listen(MigrationStarted::class, config()->get('schema-events.listeners.ran'));
-        Event::listen(MigrationsEnded::class, config()->get('schema-events.listeners.finished'));
+
+        // If the MigrationsEnded listener is not configured, the consuming
+        // application wants to handle dispacthing the events itself.
+        if ($listener = config()->get('schema-events.listeners.finished')) {
+            Event::listen(MigrationsEnded::class, $listener);
+        }
 
         return $this;
     }
