@@ -20,11 +20,12 @@ Track and respond to database schema changes in your Laravel application through
 - [Usage](#usage)
   - [Available Events](#available-events)
   - [Event Properties](#event-properties)
+  - [Repository](#repository)
 - [Contributing](#contributing)
 - [Credits](#credits)
 - [License](#license)
 - [Security Vulnerabilities](#security-vulnerabilities)
-- [About Plank](#about-plank)
+- [About Plank](#check-us-out)
 
 ## Installation
 
@@ -114,11 +115,13 @@ The package provides four main events:
 ### Event Properties
 
 Each event includes basic connection information:
+
 - `connection` - The name of the database connection
 - `databaseName` - The name of the database
 - `driverName` - The database driver being used
 
 #### TableCreated Event
+
 ```php
 public readonly string $table;
 public readonly Collection $columns;      // Added columns
@@ -127,6 +130,7 @@ public readonly Collection $foreignKeys;  // Added foreign keys
 ```
 
 #### TableChanged Event
+
 ```php
 public readonly string $table;
 public readonly Collection $addedColumns;
@@ -141,15 +145,49 @@ public readonly Collection $droppedForeignKeys;
 ```
 
 #### TableDropped Event
+
 ```php
 public readonly string $table;
 ```
 
 #### TableRenamed Event
+
 ```php
 public readonly string $from;
 public readonly string $to;
 ```
+
+### Repository
+
+The event repository collects the schema events that occur during the migrations which can be retrieved after the `MigrationsEnded` event is fired by the Migrator.
+
+If your application wants to handle dispatching and flushing the events, you can set the `schema-events.listeners.finished` listener to `null` and listen to the `MigrationsEnded` event in your application.
+
+The schema event repository can be controlled using the `SchemaEvents` facade.
+
+#### get()
+
+Retrieve all schema events that were fired during the course of the migrations.
+
+#### created()
+
+Retrieve all `TableCreated` events that were fired during the course of the migrations.
+
+#### changed()
+
+Retrieve all `TableChanged` events that were fired during the course of the migrations.
+
+#### renamed()
+
+Retrieve all `TableRenamed` events that were fired during the course of the migrations.
+
+#### dropped()
+
+Retrieve all `TableDropped` events that were fired during the course of the migrations.
+
+#### flush()
+
+Clear all schema events stored in the schema event repository.
 
 ## Contributing
 
