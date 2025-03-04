@@ -16,12 +16,6 @@ return new class extends Migration
             $table->foreignId('publisher_id')->constrained();
             $table->string('published_at');
             $table->index(['published_at']);
-
-            $table->renameColumn('description', 'blurb');
-            $table->dropColumn('teaser');
-            $table->dropForeign(['author_id']);
-            $table->dropIndex(['tag']);
-            $table->renameIndex('posts_category_index', 'category_index');
         });
     }
 };
