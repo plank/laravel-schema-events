@@ -58,7 +58,7 @@ class EventRepository
     }
 
     /**
-     * @param Collection<TableCreated|TableChanged|TableDropped|TableRenamed> $events
+     * @param  Collection<TableCreated|TableChanged|TableDropped|TableRenamed>  $events
      */
     public function store(Collection $events): void
     {

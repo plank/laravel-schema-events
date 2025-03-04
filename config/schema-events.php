@@ -10,13 +10,13 @@ return [
     |--------------------------------------------------------------------------
     |
     | `ran`:
-    | This listens to `MigrationStarted` event which is dispatched before each 
+    | This listens to `MigrationStarted` event which is dispatched before each
     | migration file is run. This listener is responsible for collecting the
-    | schema events that will be occurring during the run. 
+    | schema events that will be occurring during the run.
     |
     | `finished`:
-    | This listens for the completion of migrations being run and emits all 
-    | of the collected schema events. If this is 
+    | This listens for the completion of migrations being run and emits all
+    | of the collected schema events. If this is
     |
     */
     'listeners' => [
