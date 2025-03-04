@@ -12,5 +12,7 @@ class MigrationsFinished
     {
         SchemaEvents::get()
             ->each(fn ($event) => Event::dispatch($event));
+
+        SchemaEvents::flush();
     }
 }

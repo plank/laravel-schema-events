@@ -10,15 +10,14 @@ return [
     |--------------------------------------------------------------------------
     |
     | `ran`:
-    | This listens to `MigrationStarted` events and bubbles up some more granular
-    | events based on the changes taking place to the schema.
-    |
-    | If the `finished` listener is not configured, these events will bubble up
-    | immediately.
+    | This listens to `MigrationStarted` event which is dispatched before each 
+    | migration file is run. This listener is responsible for collecting the
+    | schema events that will be occurring during the run. 
     |
     | `finished`:
-    | This listens for the completion of migrations being run and batches the more
-    | granular events parsed during `ran` into one larger event to be processed.
+    | This listens for the completion of migrations being run and emits all 
+    | of the collected schema events. If this is 
+    |
     */
     'listeners' => [
         'ran' => MigrationRan::class,
