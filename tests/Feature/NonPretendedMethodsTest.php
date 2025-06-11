@@ -86,6 +86,6 @@ it('can get types', function () {
     instance('db.schema', $schema = EventSchemaFactory::forConnection($connection));
 
     $connection->pretend(function () use ($schema) {
-        expect(fn () => $schema->getTypes())->toThrow(LogicException::class);
+        expect(fn () => $schema->getTypes())->toThrow(RuntimeException::class);
     });
 });
