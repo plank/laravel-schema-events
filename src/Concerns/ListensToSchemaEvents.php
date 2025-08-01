@@ -78,9 +78,9 @@ trait ListensToSchemaEvents
      *
      * @return array
      */
-    public function getViews()
+    public function getViews($schema = null)
     {
-        return $this->connection->withoutPretending(fn () => parent::getViews());
+        return $this->connection->withoutPretending(fn () => parent::getViews($schema));
     }
 
     /**
@@ -121,8 +121,8 @@ trait ListensToSchemaEvents
      *
      * @return array
      */
-    public function getTypes()
+    public function getTypes($schema = null)
     {
-        return $this->connection->withoutPretending(fn () => parent::getTypes());
+        return $this->connection->withoutPretending(fn () => parent::getTypes($schema));
     }
 }
