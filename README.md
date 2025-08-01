@@ -123,38 +123,38 @@ Each event includes basic connection information:
 #### TableCreated Event
 
 ```php
-public readonly string $table;
-public readonly Collection $columns;      // Added columns
-public readonly Collection $indexes;      // Added indexes
-public readonly Collection $foreignKeys;  // Added foreign keys
+public string $table;
+public Collection $columns;      // Added columns
+public Collection $indexes;      // Added indexes
+public Collection $foreignKeys;  // Added foreign keys
 ```
 
 #### TableChanged Event
 
 ```php
-public readonly string $table;
-public readonly Collection $addedColumns;
-public readonly Collection $droppedColumns;
-public readonly Collection $renamedColumns;     // Contains [from => x, to => y]
-public readonly Collection $modifiedColumns;
-public readonly Collection $addedIndexes;
-public readonly Collection $droppedIndexes;
-public readonly Collection $renamedIndexes;     // Contains [from => x, to => y]
-public readonly Collection $addedForeignKeys;
-public readonly Collection $droppedForeignKeys;
+public string $table;
+public Collection $addedColumns;
+public Collection $droppedColumns;
+public Collection $renamedColumns;     // Contains [from => x, to => y]
+public Collection $modifiedColumns;
+public Collection $addedIndexes;
+public Collection $droppedIndexes;
+public Collection $renamedIndexes;     // Contains [from => x, to => y]
+public Collection $addedForeignKeys;
+public Collection $droppedForeignKeys;
 ```
 
 #### TableDropped Event
 
 ```php
-public readonly string $table;
+public string $table;
 ```
 
 #### TableRenamed Event
 
 ```php
-public readonly string $from;
-public readonly string $to;
+public string $from;
+public string $to;
 ```
 
 ### Repository
