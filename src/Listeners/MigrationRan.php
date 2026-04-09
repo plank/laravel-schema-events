@@ -31,13 +31,14 @@ class MigrationRan
 
     protected function parseMigrationEvents(Connection $connection, Closure $callback): Collection
     {
-        $activeInServiceContainer = $this->container->make('db.schema');
+        $app = app();
+        $activeInServiceContainer = $app->make('db.schema');
         $activeOnConnection = $connection->getSchemaBuilder();
         $hasConfigurableSchema = is_a($connection, 'Kfriars\ConnectionShim\Contracts\ConfigurableSchema', true);
 
         try {
             $schema = EventSchemaFactory::forConnection($connection);
-            $this->container->instance('db.schema', $schema);
+            $app->instance('db.schema', $schema);
 
             if ($hasConfigurableSchema) {
                 $connection->setSchemaBuilder($schema);
@@ -45,7 +46,7 @@ class MigrationRan
 
             $connection->pretend(fn () => $callback());
         } finally {
-            $this->container->instance('db.schema', $activeInServiceContainer);
+            $app->instance('db.schema', $activeInServiceContainer);
 
             if ($hasConfigurableSchema) {
                 $connection->setSchemaBuilder($activeOnConnection);
