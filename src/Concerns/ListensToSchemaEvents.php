@@ -68,9 +68,9 @@ trait ListensToSchemaEvents
         return $this->connection->withoutPretending(fn () => parent::hasTable($table));
     }
 
-    public function getTables($withSize = true)
+    public function getTables($schema = null)
     {
-        return $this->connection->withoutPretending(fn () => parent::getTables());
+        return $this->connection->withoutPretending(fn () => parent::getTables($schema));
     }
 
     /**
