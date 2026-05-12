@@ -18,6 +18,7 @@
     "require": {
         "php": "^8.3",
         "illuminate/contracts": "^13.0",
+        "plank/laravel-pivot-events": "^13",
         "spatie/laravel-package-tools": "^1.16"
     },
     "require-dev": {
